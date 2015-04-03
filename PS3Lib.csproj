@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PS3ManagerAPI">
+      <HintPath>.\PS3ManagerAPI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -64,12 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ps3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PS3MAPI\PS3MAPI.csproj">
-      <Project>{eb5bfc01-6e94-4466-922f-370b723b671f}</Project>
-      <Name>PS3MAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

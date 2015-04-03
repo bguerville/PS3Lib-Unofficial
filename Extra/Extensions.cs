@@ -274,14 +274,14 @@ namespace PS3Lib
             SetMem(offset, buff, CurrentAPI);
         }
 
-        private void SetMem(uint Address, byte[] buffer, SelectAPI API)
+        private void SetMem(uint offset, byte[] buffer, SelectAPI API)
         {
             if (API == SelectAPI.ControlConsole)
-                Common.CcApi.SetMemory(Address, buffer);
+                Common.CcApi.SetMemory(offset, buffer);
             else if (API == SelectAPI.TargetManager)
-                Common.TmApi.SetMemory(Address, buffer);
+                Common.TmApi.SetMemory(offset, buffer);
             else if (API == SelectAPI.PS3Manager)
-                Common.Ps3mApi.SetMemory(Address, buffer);
+                Common.Ps3mApi.SetMemory(offset, buffer);
         }
 
         private void GetMem(uint offset, byte[] buffer, SelectAPI API)

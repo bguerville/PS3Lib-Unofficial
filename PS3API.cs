@@ -284,6 +284,62 @@ namespace PS3Lib
             }
         }
 
+        /// <summary>Set a new ConsoleID in real time. (string)</summary>
+        public void SetConsoleID(string consoleID)
+        {
+            if (SetAPI.API == SelectAPI.ControlConsole)
+            {
+               Common.CcApi.SetConsoleID(consoleID);
+
+            }
+            else if (SetAPI.API == SelectAPI.PS3Manager)
+            {
+                Common.Ps3mApi.SetConsoleID(consoleID);
+            }
+        }
+
+        /// <summary>Set a new ConsoleID in real time. (bytes)</summary>
+        public void SetConsoleID(byte[] consoleID)
+        {
+            if (SetAPI.API == SelectAPI.ControlConsole)
+            {
+                Common.CcApi.SetConsoleID(consoleID);
+
+            }
+            else if (SetAPI.API == SelectAPI.PS3Manager)
+            {
+                Common.Ps3mApi.SetConsoleID(consoleID);
+            }
+        }
+
+        /// <summary>Set a new PSID in real time. (string)</summary>
+        public void SetPSID(string PSID)
+        {
+            if (SetAPI.API == SelectAPI.ControlConsole)
+            {
+                Common.CcApi.SetPSID(PSID);
+
+            }
+            else if (SetAPI.API == SelectAPI.PS3Manager)
+            {
+                Common.Ps3mApi.SetPSID(PSID);
+            }
+        }
+
+        /// <summary>Set a new PSID in real time. (bytes)</summary>
+        public void SetPSID(byte[] PSID)
+        {
+            if (SetAPI.API == SelectAPI.ControlConsole)
+            {
+                Common.CcApi.SetPSID(PSID);
+
+            }
+            else if (SetAPI.API == SelectAPI.PS3Manager)
+            {
+                Common.Ps3mApi.SetPSID(PSID);
+            }
+        }
+
         public enum BuzzerMode
         {
             Single,

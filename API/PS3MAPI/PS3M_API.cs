@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace PS3Lib
@@ -110,7 +111,7 @@ namespace PS3Lib
         {
             try
             {
-                PS3M_API.Process.Memory.Set(PS3M_API.Process.Process_Pid, offset, buffer);
+                PS3M_API.Process.Memory.Set(PS3M_API.Process.Process_Pid, (ulong)offset, buffer);
                 return true;
             }
             catch (Exception ex)
@@ -125,7 +126,7 @@ namespace PS3Lib
         {
             try
             {
-                PS3M_API.Process.Memory.Set(PS3M_API.Process.Process_Pid, (uint)offset, buffer);
+                PS3M_API.Process.Memory.Set(PS3M_API.Process.Process_Pid, offset, buffer);
                 return true;
             }
             catch (Exception ex)
@@ -143,7 +144,7 @@ namespace PS3Lib
                 Array.Reverse(Entry);
             try
             {
-                PS3M_API.Process.Memory.Set(PS3M_API.Process.Process_Pid, (uint)offset, Entry);
+                PS3M_API.Process.Memory.Set(PS3M_API.Process.Process_Pid, offset, Entry);
                 return true;
             }
             catch (Exception ex)
@@ -158,7 +159,7 @@ namespace PS3Lib
         {
             try
             {
-                PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, offset, buffer);
+                PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, (ulong)offset, buffer);
                 return true;
             }
             catch (Exception ex)
@@ -173,7 +174,7 @@ namespace PS3Lib
         {
             try
             {
-                PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, (uint)offset, buffer);
+                PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, offset, buffer);
                 return true;
             }
             catch (Exception ex)
@@ -187,7 +188,7 @@ namespace PS3Lib
         public byte[] GetBytes(uint offset, uint length)
         {
             byte[] buffer = new byte[length];
-            PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, offset, buffer);
+            PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, (ulong)offset, buffer);
             return buffer;
         }
 
@@ -195,7 +196,7 @@ namespace PS3Lib
         public byte[] GetBytes(ulong offset, uint length)
         {
             byte[] buffer = new byte[length];
-            PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, (uint)offset, buffer);
+            PS3M_API.Process.Memory.Get(PS3M_API.Process.Process_Pid, offset, buffer);
             return buffer;
         }
 
@@ -418,6 +419,110 @@ namespace PS3Lib
                 MessageBox.Show(ex.Message, "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+        }
+
+        /// <summary>Set a new ConsoleID in real time. (string)</summary>
+        public bool SetConsoleID(string consoleID)
+        {
+            if (consoleID.Length < 32)
+            {
+                MessageBox.Show("Invalid ConsoleID", "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            try
+            {
+                string newCID = "";
+                if (consoleID.Length > 32) newCID = consoleID.Substring(0, 32);
+                PS3M_API.PS3.SetIDPS(newCID);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            
+            }
+        }
+
+        /// <summary>Set a new ConsoleID in real time. (bytes)</summary>
+        public bool SetConsoleID(byte[] consoleID)
+        {
+            string newCID = ByteArrayToString(consoleID);
+            if (newCID.Length < 32)
+            {
+                MessageBox.Show("Invalid ConsoleID", "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            try
+            {
+                if (newCID.Length > 32) newCID = newCID.Substring(0, 32);
+                PS3M_API.PS3.SetIDPS(newCID);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+
+            }
+        }
+
+        /// <summary>Set a new PSID in real time. (string)</summary>
+        public bool SetPSID(string PSID)
+        {
+            if (PSID.Length < 32)
+            {
+                MessageBox.Show("Invalid ConsoleID", "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            try
+            {
+                string newPSID = "";
+                if (PSID.Length > 32) newPSID = PSID.Substring(0, 32);
+                PS3M_API.PS3.SetPSID(newPSID);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+
+            }
+        }
+
+        /// <summary>Set a new PSID in real time. (bytes)</summary>
+        public bool SetPSID(byte[] PSID)
+        {
+            string newPSID = ByteArrayToString(PSID);
+            if (newPSID.Length < 32)
+            {
+                MessageBox.Show("Invalid ConsoleID", "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            try
+            {
+                if (newPSID.Length > 32) newPSID = newPSID.Substring(0, 32);
+                PS3M_API.PS3.SetPSID(newPSID);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error PS3M_API", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+
+            }
+        }
+
+        internal static string ByteArrayToString(byte[] bytes)
+        {
+            try
+            {
+                StringBuilder hex = new StringBuilder(bytes.Length * 2);
+                foreach (byte b in bytes)
+                    hex.AppendFormat("{0:x2}", b);
+                return hex.ToString();
+            }
+            catch { throw new ArgumentException("Value not possible.", "HEX String"); }
         }
 
         internal static byte[] StringToByteArray(string hex)

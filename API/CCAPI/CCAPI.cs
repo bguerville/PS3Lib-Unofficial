@@ -598,8 +598,7 @@ namespace PS3Lib
         /// <summary>Return the type of your firmware in string format.</summary>
         public string GetFirmwareType()
         {
-            if (pInfo.ConsoleType.ToString() == "")
-                GetTargetInfo(out pInfo);
+            if (pInfo.ConsoleType == 0) GetTargetInfo(out pInfo);
             string type = String.Empty;
             if (pInfo.ConsoleType == (int)ConsoleType.CEX)
                 type = "CEX";
